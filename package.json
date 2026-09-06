@@ -1,0 +1,19 @@
+{
+  "name": "@chocolajs/benchmark",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Benchmark suite comparing Chocola vs SvelteKit fixtures",
+  "scripts": {
+    "bench": "node bench.mjs",
+    "bench:quick": "node bench.mjs --runs=1 --skip-dev",
+    "bench:verbose": "node bench.mjs --runs=3 --verbose",
+    "bench:json": "node bench.mjs --json",
+    "bench:markdown": "node bench.mjs --markdown"
+  },
+  "keywords": ["benchmark", "chocola", "sveltekit"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
