@@ -1,0 +1,63 @@
+<script>
+	export let ghost = false;
+	export let primary = false;
+	export let featured = false;
+	export let label = '';
+</script>
+
+<button class:ghost class:primary class:featured>
+	{label}
+</button>
+
+<style>
+	button {
+		font-family: 'Inter', sans-serif;
+		font-weight: 600;
+		font-size: 14.5px;
+		padding: 10px 20px;
+		border-radius: 999px;
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		border: 1px solid transparent;
+		background-color: transparent;
+		cursor: pointer;
+		user-select: none;
+		transition:
+			transform 0.15s ease,
+			border-color 0.15s ease,
+			background 0.15s ease,
+			background-color 0.3s ease-in-out;
+	}
+
+	.ghost {
+		border-color: var(--border);
+		color: var(--text-muted);
+	}
+
+	.ghost:hover {
+		border-color: var(--gold-line);
+		color: var(--text);
+	}
+
+	.primary {
+		background-color: var(--text);
+		color: var(--bg);
+	}
+
+	.primary:hover {
+		background-color: rgb(51, 51, 51);
+	}
+
+	.featured {
+		border-color: var(--gold-line);
+		background-color: var(--gold-soft);
+		color: var(--gold);
+	}
+
+	.featured:hover {
+		color: var(--bg);
+		background-color: var(--gold);
+	}
+</style>
