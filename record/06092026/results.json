@@ -1,0 +1,261 @@
+{
+  "meta": {
+    "date": "2026-09-06T05:52:15.159Z",
+    "node": "v24.18.0",
+    "npm": "11.18.0",
+    "platform": "win32 x64",
+    "cpu": "AMD Ryzen 5 5600 6-Core Processor              ",
+    "cpus": 12,
+    "totalMem": 17102372864,
+    "runs": 1,
+    "opts": {
+      "runs": 1,
+      "fixture": null,
+      "skipDev": false,
+      "skipBuild": false,
+      "json": false,
+      "markdown": false,
+      "out": null,
+      "verbose": false,
+      "coldOnly": false
+    },
+    "durationMs": 25175.4925
+  },
+  "results": [
+    {
+      "key": "chocola",
+      "name": "Chocola",
+      "dir": "...\\fixtures\\chocola",
+      "nodeModules": {
+        "bytes": 3692451,
+        "files": 1153,
+        "packages": 1,
+        "deps": 1,
+        "devDeps": 0,
+        "lockBytes": 11011,
+        "topLargest": [
+          {
+            "file": "css-what\\src\\__fixtures__\\out.json",
+            "size": 438037
+          },
+          {
+            "file": "linkedom\\worker.js",
+            "size": 411521
+          },
+          {
+            "file": "htmlparser2\\node_modules\\dom-serializer\\node_modules\\entities\\lib\\generated\\encode-html.js.map",
+            "size": 48228
+          },
+          {
+            "file": "htmlparser2\\node_modules\\dom-serializer\\node_modules\\entities\\lib\\esm\\generated\\encode-html.js.map",
+            "size": 48225
+          },
+          {
+            "file": "htmlparser2\\node_modules\\dom-serializer\\node_modules\\entities\\lib\\generated\\decode-data-html.js",
+            "size": 47822
+          }
+        ]
+      },
+      "build": {
+        "runs": 1,
+        "cold": {
+          "times": [
+            349.05019999999996
+          ],
+          "valid": [
+            349.05019999999996
+          ],
+          "avg": 349.05019999999996,
+          "median": 349.05019999999996,
+          "min": 349.05019999999996,
+          "max": 349.05019999999996
+        },
+        "warm": {
+          "times": [
+            383.00519999999995
+          ],
+          "valid": [
+            383.00519999999995
+          ],
+          "avg": 383.00519999999995,
+          "median": 383.00519999999995,
+          "min": 383.00519999999995,
+          "max": 383.00519999999995
+        },
+        "error": null
+      },
+      "buildOutput": {
+        "dir": "dist",
+        "bytes": 219481,
+        "files": 10,
+        "breakdown": {
+          "js": 21518,
+          "css": 43239,
+          "html": 16944,
+          "svg": 23755,
+          "jpg": 114025,
+          "other": 0
+        },
+        "byExt": {
+          ".css": 43239,
+          ".svg": 23755,
+          ".html": 16944,
+          ".js": 21518,
+          ".jpg": 114025
+        },
+        "largest": [
+          {
+            "file": "static\\img\\banner.jpg",
+            "size": 114025
+          },
+          {
+            "file": "sc-47gn4b.css",
+            "size": 37329
+          },
+          {
+            "file": "static\\img\\footer_img.svg",
+            "size": 21512
+          },
+          {
+            "file": "index.html",
+            "size": 16944
+          },
+          {
+            "file": "run-o263rz.js",
+            "size": 8825
+          }
+        ],
+        "exists": true
+      },
+      "dev": {
+        "success": true,
+        "ms": 387.7186999999999,
+        "source": "log"
+      },
+      "cache": {
+        ".chocola": {
+          "bytes": 361,
+          "files": 1
+        }
+      }
+    },
+    {
+      "key": "sveltekit",
+      "name": "SvelteKit",
+      "dir": "...\\fixtures\\sveltekit",
+      "nodeModules": {
+        "bytes": 29552710,
+        "files": 1529,
+        "packages": 5,
+        "deps": 0,
+        "devDeps": 5,
+        "lockBytes": 47704,
+        "topLargest": [
+          {
+            "file": "@esbuild\\win32-x64\\esbuild.exe",
+            "size": 9913856
+          },
+          {
+            "file": "@rollup\\rollup-win32-x64-msvc\\rollup.win32-x64-msvc.node",
+            "size": 2681344
+          },
+          {
+            "file": "vite\\dist\\node\\chunks\\dep-BK3b2jBa.js",
+            "size": 2086035
+          },
+          {
+            "file": "@rollup\\rollup-win32-x64-gnu\\rollup.win32-x64-gnu.node",
+            "size": 2083840
+          },
+          {
+            "file": "rollup\\dist\\es\\shared\\node-entry.js",
+            "size": 956836
+          }
+        ]
+      },
+      "build": {
+        "runs": 1,
+        "cold": {
+          "times": [
+            5940.7806
+          ],
+          "valid": [
+            5940.7806
+          ],
+          "avg": 5940.7806,
+          "median": 5940.7806,
+          "min": 5940.7806,
+          "max": 5940.7806
+        },
+        "warm": {
+          "times": [
+            6040.0761999999995
+          ],
+          "valid": [
+            6040.0761999999995
+          ],
+          "avg": 6040.0761999999995,
+          "median": 6040.0761999999995,
+          "min": 6040.0761999999995,
+          "max": 6040.0761999999995
+        },
+        "error": null
+      },
+      "buildOutput": {
+        "dir": "build",
+        "bytes": 266413,
+        "files": 21,
+        "breakdown": {
+          "js": 99557,
+          "css": 14752,
+          "html": 14297,
+          "svg": 23755,
+          "jpg": 114025,
+          "other": 27
+        },
+        "byExt": {
+          ".svg": 23755,
+          ".jpg": 114025,
+          ".html": 14297,
+          ".css": 14752,
+          ".js": 99557,
+          ".json": 27
+        },
+        "largest": [
+          {
+            "file": "img\\banner.jpg",
+            "size": 114025
+          },
+          {
+            "file": "_app\\immutable\\chunks\\Crwxnk5c.js",
+            "size": 27407
+          },
+          {
+            "file": "_app\\immutable\\entry\\start.Biw2glAo.js",
+            "size": 22884
+          },
+          {
+            "file": "img\\footer_img.svg",
+            "size": 21512
+          },
+          {
+            "file": "_app\\immutable\\nodes\\2.CIM2g1Wm.js",
+            "size": 18336
+          }
+        ],
+        "exists": true
+      },
+      "dev": {
+        "success": true,
+        "ms": 1869.2279999999992,
+        "source": "http"
+      },
+      "cache": {
+        ".svelte-kit": {
+          "bytes": 679768,
+          "files": 63
+        }
+      }
+    }
+  ]
+}
