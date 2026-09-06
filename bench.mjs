@@ -17,6 +17,48 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Privacy: helpers to ensure no absolute paths leak in output
+function toRelative(p) {
+  try {
+    const rel = path.relative(__dirname, p);
+    // Use forward slashes for portability and privacy
+    return rel.replace(/\\/g, '/') || '.';
+  } catch {
+    return p;
+  }
+}
+
+function sanitizeString(str) {
+  if (!str || typeof str !== 'string') return str;
+  let s = str;
+  // Replace absolute benchmark root and cwd with relative '.'
+  const roots = new Set([__dirname, process.cwd()]);
+  for (const root of roots) {
+    if (!root) continue;
+    const variants = [
+      root,
+      root.replace(/\\/g, '/'),
+      root.replace(/\//g, '\\'),
+      path.normalize(root),
+      path.normalize(root).replace(/\\/g, '/'),
+    ];
+    for (const v of variants) {
+      if (!v) continue;
+      s = s.split(v).join('.');
+    }
+  }
+  // Clean up leading ./ or .\ after replacement
+  s = s.replace(/\.\//g, '').replace(/\.\\/g, '');
+  s = s.replace(/^\.[\\/]/, '');
+  // Also strip any remaining drive-letter prefix like F:/ or F:\ at start of paths within string
+  // Replace patterns like "F:\github\chocolajs\benchmark" already handled, but fallback for other homes
+  s = s.replace(/[A-Z]:[\\/][^\s"'`]*benchmark[\\/]?/gi, (m) => {
+    const rel = m.replace(/^[A-Z]:[\\/]/i, '').split('benchmark')[1] || '';
+    return rel.replace(/^[\\/]/, '');
+  });
+  return s;
+}
+
 // ---------------------------------------------------------------------------
 // Config
 // ---------------------------------------------------------------------------
@@ -141,7 +183,7 @@ async function getDirSize(dir, opts = {}) {
           files++;
           const ext = path.extname(e.name).toLowerCase() || '(no-ext)';
           byExt[ext] = (byExt[ext] || 0) + stat.size;
-          largest.push({ file: path.relative(dir, full), size: stat.size });
+          largest.push({ file: path.relative(dir, full).replace(/\\/g, '/'), size: stat.size });
         }
       } catch {}
     }
@@ -187,15 +229,24 @@ function runMeasured(cmd, args, cwd, verbose) {
     const start = performance.now();
     const child = spawnWithFallback(cmd, args, {
       cwd,
-      stdio: verbose ? 'inherit' : 'pipe',
+      // Always pipe so we can sanitize absolute paths before printing (privacy)
+      stdio: 'pipe',
       env: { ...process.env, FORCE_COLOR: '0', CI: '1' },
     });
     let stdout = '';
     let stderr = '';
-    if (!verbose) {
-      child.stdout?.on('data', (d) => (stdout += d.toString()));
-      child.stderr?.on('data', (d) => (stderr += d.toString()));
-    }
+    child.stdout?.on('data', (d) => {
+      const raw = d.toString();
+      const sanitized = sanitizeString(raw);
+      if (verbose) process.stdout.write(sanitized);
+      stdout += raw;
+    });
+    child.stderr?.on('data', (d) => {
+      const raw = d.toString();
+      const sanitized = sanitizeString(raw);
+      if (verbose) process.stderr.write(sanitized);
+      stderr += raw;
+    });
     child.on('error', (err) => {
       const end = performance.now();
       resolve({ ms: end - start, code: 1, stdout, stderr: err.message, error: err });
@@ -263,10 +314,11 @@ async function measureDevStartup(fixture, verbose) {
 
   const logPromise = new Promise((resolve) => {
     const onData = (buf, isErr) => {
-      const s = buf.toString();
+      const raw = buf.toString();
+      const s = raw;
       if (isErr) stderr += s;
       else stdout += s;
-      if (verbose) process.stderr.write(s);
+      if (verbose) process.stderr.write(sanitizeString(raw));
       if (!readyViaLog && fixture.devReadyHint.test(s)) {
         readyViaLog = performance.now() - start;
       }
@@ -375,7 +427,7 @@ async function benchFixture(key, opts) {
   const fixture = FIXTURES[key];
   if (!fixture) throw new Error(`Unknown fixture ${key}`);
   if (!fs.existsSync(fixture.dir)) {
-    return { key, name: fixture.name, error: `Fixture dir missing: ${fixture.dir}` };
+    return { key, name: fixture.name, error: `Fixture dir missing: ${toRelative(fixture.dir)}` };
   }
 
   const verbose = opts.verbose;
@@ -414,10 +466,10 @@ async function benchFixture(key, opts) {
       // small delay to let FS settle
       await new Promise((r) => setTimeout(r, 200));
       const res = await runMeasured(fixture.buildCmd.cmd, fixture.buildCmd.args, fixture.dir, verbose);
-      if (res.code !== 0) {
-        lastErr = res.stderr || res.stdout || `exit ${res.code}`;
-        if (verbose) console.error(`  build failed: ${lastErr.slice(0, 500)}`);
-        timesCold.push(null);
+        if (res.code !== 0) {
+          lastErr = sanitizeString(res.stderr || res.stdout || `exit ${res.code}`);
+          if (verbose) console.error(`  build failed: ${lastErr.slice(0, 500)}`);
+          timesCold.push(null);
       } else {
         timesCold.push(res.ms);
         if (verbose) console.log(`  cold build ${i + 1}: ${formatMs(res.ms)}`);
@@ -501,9 +553,9 @@ async function benchFixture(key, opts) {
       success: devRes.success,
       ms: devRes.success ? devRes.ms : null,
       source: devRes.source,
-      error: devRes.error,
+      error: sanitizeString(devRes.error),
     };
-    if (verbose) console.log(`  dev startup: ${devRes.success ? formatMs(devRes.ms) : 'FAILED ' + devRes.error}`);
+    if (verbose) console.log(`  dev startup: ${devRes.success ? formatMs(devRes.ms) : 'FAILED ' + sanitizeString(devRes.error)}`);
   }
 
   // svelte-kit or .chocola cache size (if not cleaned? after build it will exist)
@@ -521,7 +573,7 @@ async function benchFixture(key, opts) {
   return {
     key,
     name: fixture.name,
-    dir: fixture.dir,
+    dir: toRelative(fixture.dir),
     nodeModules: {
       bytes: nmInfo.bytes,
       files: nmInfo.files,
@@ -596,7 +648,7 @@ function buildReport(results, meta) {
       lines.push(`> WARNING: Error: ${r.error}`);
       lines.push('');
     }
-    lines.push(`- **Fixture dir:** \`${path.relative(__dirname, r.dir)}\``);
+    lines.push(`- **Fixture dir:** \`${sanitizeString(r.dir).replace(/\\/g, '/')}\``);
     lines.push(`- **Dependencies:** ${r.nodeModules.deps} deps, ${r.nodeModules.devDeps} devDeps`);
     lines.push(`- **node_modules:** ${formatBytes(r.nodeModules.bytes)} - ${r.nodeModules.files.toLocaleString()} files - lock ${formatBytes(r.nodeModules.lockBytes)}`);
     if (r.build) {
