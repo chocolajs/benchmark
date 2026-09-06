@@ -1,6 +1,6 @@
 {
   "meta": {
-    "date": "2026-09-06T05:52:15.159Z",
+    "date": "2026-09-06T06:23:20.540Z",
     "node": "v24.18.0",
     "npm": "11.18.0",
     "platform": "win32 x64",
@@ -11,21 +11,21 @@
     "opts": {
       "runs": 1,
       "fixture": null,
-      "skipDev": false,
+      "skipDev": true,
       "skipBuild": false,
       "json": false,
       "markdown": false,
       "out": null,
-      "verbose": false,
+      "verbose": true,
       "coldOnly": false
     },
-    "durationMs": 25175.4925
+    "durationMs": 13491.911600000001
   },
   "results": [
     {
       "key": "chocola",
       "name": "Chocola",
-      "dir": "...\\fixtures\\chocola",
+      "dir": "fixtures/chocola",
       "nodeModules": {
         "bytes": 3692451,
         "files": 1153,
@@ -35,23 +35,23 @@
         "lockBytes": 11011,
         "topLargest": [
           {
-            "file": "css-what\\src\\__fixtures__\\out.json",
+            "file": "css-what/src/__fixtures__/out.json",
             "size": 438037
           },
           {
-            "file": "linkedom\\worker.js",
+            "file": "linkedom/worker.js",
             "size": 411521
           },
           {
-            "file": "htmlparser2\\node_modules\\dom-serializer\\node_modules\\entities\\lib\\generated\\encode-html.js.map",
+            "file": "htmlparser2/node_modules/dom-serializer/node_modules/entities/lib/generated/encode-html.js.map",
             "size": 48228
           },
           {
-            "file": "htmlparser2\\node_modules\\dom-serializer\\node_modules\\entities\\lib\\esm\\generated\\encode-html.js.map",
+            "file": "htmlparser2/node_modules/dom-serializer/node_modules/entities/lib/esm/generated/encode-html.js.map",
             "size": 48225
           },
           {
-            "file": "htmlparser2\\node_modules\\dom-serializer\\node_modules\\entities\\lib\\generated\\decode-data-html.js",
+            "file": "htmlparser2/node_modules/dom-serializer/node_modules/entities/lib/generated/decode-data-html.js",
             "size": 47822
           }
         ]
@@ -60,27 +60,27 @@
         "runs": 1,
         "cold": {
           "times": [
-            349.05019999999996
+            349.7215
           ],
           "valid": [
-            349.05019999999996
+            349.7215
           ],
-          "avg": 349.05019999999996,
-          "median": 349.05019999999996,
-          "min": 349.05019999999996,
-          "max": 349.05019999999996
+          "avg": 349.7215,
+          "median": 349.7215,
+          "min": 349.7215,
+          "max": 349.7215
         },
         "warm": {
           "times": [
-            383.00519999999995
+            346.07000000000005
           ],
           "valid": [
-            383.00519999999995
+            346.07000000000005
           ],
-          "avg": 383.00519999999995,
-          "median": 383.00519999999995,
-          "min": 383.00519999999995,
-          "max": 383.00519999999995
+          "avg": 346.07000000000005,
+          "median": 346.07000000000005,
+          "min": 346.07000000000005,
+          "max": 346.07000000000005
         },
         "error": null
       },
@@ -105,15 +105,15 @@
         },
         "largest": [
           {
-            "file": "static\\img\\banner.jpg",
+            "file": "static/img/banner.jpg",
             "size": 114025
           },
           {
-            "file": "sc-47gn4b.css",
+            "file": "sc-uwjo1h.css",
             "size": 37329
           },
           {
-            "file": "static\\img\\footer_img.svg",
+            "file": "static/img/footer_img.svg",
             "size": 21512
           },
           {
@@ -121,17 +121,13 @@
             "size": 16944
           },
           {
-            "file": "run-o263rz.js",
+            "file": "run-7wegmx.js",
             "size": 8825
           }
         ],
         "exists": true
       },
-      "dev": {
-        "success": true,
-        "ms": 387.7186999999999,
-        "source": "log"
-      },
+      "dev": null,
       "cache": {
         ".chocola": {
           "bytes": 361,
@@ -142,7 +138,7 @@
     {
       "key": "sveltekit",
       "name": "SvelteKit",
-      "dir": "...\\fixtures\\sveltekit",
+      "dir": "fixtures/sveltekit",
       "nodeModules": {
         "bytes": 29552710,
         "files": 1529,
@@ -152,23 +148,23 @@
         "lockBytes": 47704,
         "topLargest": [
           {
-            "file": "@esbuild\\win32-x64\\esbuild.exe",
+            "file": "@esbuild/win32-x64/esbuild.exe",
             "size": 9913856
           },
           {
-            "file": "@rollup\\rollup-win32-x64-msvc\\rollup.win32-x64-msvc.node",
+            "file": "@rollup/rollup-win32-x64-msvc/rollup.win32-x64-msvc.node",
             "size": 2681344
           },
           {
-            "file": "vite\\dist\\node\\chunks\\dep-BK3b2jBa.js",
+            "file": "vite/dist/node/chunks/dep-BK3b2jBa.js",
             "size": 2086035
           },
           {
-            "file": "@rollup\\rollup-win32-x64-gnu\\rollup.win32-x64-gnu.node",
+            "file": "@rollup/rollup-win32-x64-gnu/rollup.win32-x64-gnu.node",
             "size": 2083840
           },
           {
-            "file": "rollup\\dist\\es\\shared\\node-entry.js",
+            "file": "rollup/dist/es/shared/node-entry.js",
             "size": 956836
           }
         ]
@@ -177,27 +173,27 @@
         "runs": 1,
         "cold": {
           "times": [
-            5940.7806
+            5956.5674
           ],
           "valid": [
-            5940.7806
+            5956.5674
           ],
-          "avg": 5940.7806,
-          "median": 5940.7806,
-          "min": 5940.7806,
-          "max": 5940.7806
+          "avg": 5956.5674,
+          "median": 5956.5674,
+          "min": 5956.5674,
+          "max": 5956.5674
         },
         "warm": {
           "times": [
-            6040.0761999999995
+            5719.893599999999
           ],
           "valid": [
-            6040.0761999999995
+            5719.893599999999
           ],
-          "avg": 6040.0761999999995,
-          "median": 6040.0761999999995,
-          "min": 6040.0761999999995,
-          "max": 6040.0761999999995
+          "avg": 5719.893599999999,
+          "median": 5719.893599999999,
+          "min": 5719.893599999999,
+          "max": 5719.893599999999
         },
         "error": null
       },
@@ -223,36 +219,32 @@
         },
         "largest": [
           {
-            "file": "img\\banner.jpg",
+            "file": "img/banner.jpg",
             "size": 114025
           },
           {
-            "file": "_app\\immutable\\chunks\\Crwxnk5c.js",
+            "file": "_app/immutable/chunks/Crwxnk5c.js",
             "size": 27407
           },
           {
-            "file": "_app\\immutable\\entry\\start.Biw2glAo.js",
+            "file": "_app/immutable/entry/start.Bp1Y7EJd.js",
             "size": 22884
           },
           {
-            "file": "img\\footer_img.svg",
+            "file": "img/footer_img.svg",
             "size": 21512
           },
           {
-            "file": "_app\\immutable\\nodes\\2.CIM2g1Wm.js",
+            "file": "_app/immutable/nodes/2.CIM2g1Wm.js",
             "size": 18336
           }
         ],
         "exists": true
       },
-      "dev": {
-        "success": true,
-        "ms": 1869.2279999999992,
-        "source": "http"
-      },
+      "dev": null,
       "cache": {
         ".svelte-kit": {
-          "bytes": 679768,
+          "bytes": 679874,
           "files": 63
         }
       }
