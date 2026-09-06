@@ -1,0 +1,99 @@
+<template>
+    <section class="block" id="logic">
+        <div class="wrap">
+            <div class="section-head">
+                <div class="eyebrow">Logic, baked into HTML</div>
+                <h2>if's and logic as elements, not templates</h2>
+                <p>Chocola reads control flow the way it reads everything else: as HTML. No template language to learn,
+                    no curly-brace soup to escape: just attributes, and a tag that disappears when it's done its job.
+                </p>
+            </div>
+
+            <div class="card-grid">
+                <CommonCard title="if / elif / else"
+                    desc="Chained across sibling elements, resolved like a real conditional.">
+
+                    <span class="tag">&lt;div</span> <span class="attr">if</span>=<span class="punct">"&#123;user.role
+                        ===
+                        'admin'&#125;"</span><span class="tag">&gt;</span>Admin Panel<span
+                        class="tag">&lt;/div&gt;</span>
+                    <br>
+                    <span class="tag">&lt;div</span> <span class="attr">elif</span>=<span class="punct">"&#123;user.role
+                        ===
+                        'editor'&#125;"</span><span class="tag">&gt;</span>Editor Dashboard<span
+                        class="tag">&lt;/div&gt;</span>
+                    <br>
+                    <span class="tag">&lt;div</span> <span class="attr">else</span><span class="tag">&gt;</span>View
+                    Only<span class="tag">&lt;/div&gt;</span>
+
+                </CommonCard>
+
+                <CommonCard title="&lt;void&gt; wrapper"
+                    desc="Renders only its children — the wrapper itself never reaches the DOM.">
+
+                    <span class="tag">&lt;void</span> <span class="attr">if</span>=<span
+                        class="punct">&#123;isLoaded&#125;</span><span class="tag">&gt;</span>
+                    <br>
+                    <span class="tag">&emsp;&emsp;&lt;h1&gt;</span>Data Loaded<span class="tag">&lt;/h1&gt;</span>
+                    <br>
+                    <span class="tag">&emsp;&emsp;&lt;p&gt;</span>Here is your content.<span
+                        class="tag">&lt;/p&gt;</span>
+                    <br>
+                    <span class="tag">&lt;/void&gt;</span>
+
+                </CommonCard>
+
+                <void mount:if={false}>
+                    <CommonCard title="switch / case"
+                        desc="Fallthrough is explicit — you opt in, you never inherit it by accident.">
+
+                        <span class="tag">&lt;void</span> <span class="attr">switch</span>=<span
+                            class="punct">&#123;tier&#125;</span><span class="tag">&gt;</span>
+                        <br>
+                        <span class="tag">&emsp;&emsp;&lt;case</span> <span class="attr">value</span>=<span
+                            class="punct">"pro"</span>
+                        <span class="kw">fallthrough</span><span class="tag">&gt;</span>...<span
+                            class="tag">&lt;/case&gt;</span>
+                        <br>
+                        <span class="tag">&emsp;&emsp;&lt;case</span> <span class="attr">value</span>=<span
+                            class="punct">"team"</span><span class="tag">&gt;</span>...<span
+                            class="tag">&lt;/case&gt;</span>
+                        <br>
+                        <span class="tag">&emsp;&emsp;&lt;case</span> <span class="kw">default</span><span
+                            class="tag">&gt;</span>...<span class="tag">&lt;/case&gt;</span>
+                        <br>
+                        <span class="tag">&lt;/void&gt;</span>
+
+                    </CommonCard>
+
+                    <CommonCard title="for:each" desc="Destructures item and index directly in the attribute.">
+
+                        <span class="tag">&lt;void</span> <span class="attr">for:each</span>=<span class="punct">"item,
+                            index in
+                            &#123;array&#125;"</span><span class="tag">&gt;</span>
+                        <br>
+                        <span class="tag">&emsp;&emsp;&lt;h1&gt;</span>&#123;item&#125; index: &#123;index&#125;<span
+                            class="tag">&lt;/h1&gt;</span>
+                        <br>
+                        <span class="tag">&lt;/void&gt;</span>
+
+                    </CommonCard>
+                </void>
+            </div>
+        </div>
+    </section>
+</template>
+
+<style>
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+    }
+
+    @media (max-width: 760px) {
+        .card-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

@@ -1,0 +1,72 @@
+<template>
+    <footer>
+        <div class="wrap footer-inner">
+            <a href="#top" class="logo">
+                <img src="../../static/img/footer_img.svg" alt="">
+            </a>
+            <div class="footer-links">
+                <a href="#logic">Logic</a>
+                <a href="#components">Components</a>
+                <a href="#start">Install</a>
+                <a href="https://github.com/chocolajs/chocola/wiki" target="_blank" rel="noopener noreferrer" title="Stable v1.6.0 wiki">Docs: v1.6.0</a>
+                <a href="https://github.com/chocolajs/chocola/tree/main/documentation" target="_blank" rel="noopener noreferrer" title="Preview v2 docs">Docs: v2 (next)</a>
+                <a href="https://github.com/chocolajs" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+            <div class="footer-tag">compiled by itself, obviously</div>
+        </div>
+    </footer>
+</template>
+
+<style>
+    :root {
+        border-top: 1px solid var(--border-soft);
+        padding: 56px 0 48px;
+    }
+
+    img {
+        opacity: 0.6;
+        width: 8rem;
+        filter: invert(1);
+    }
+
+    .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 26px;
+        font-size: 13.5px;
+        color: var(--text-faint);
+    }
+
+    .footer-links a {
+        text-decoration: none;
+    }
+
+    .footer-links a:hover {
+        color: var(--text-muted);
+    }
+
+    .footer-tag {
+        font-size: 13px;
+        color: var(--text-faint);
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .footer-tag a {
+        color: var(--gold);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        font-weight: 600;
+    }
+
+    .footer-tag a:hover {
+        color: var(--pink);
+    }
+</style>

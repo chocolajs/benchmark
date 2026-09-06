@@ -1,0 +1,161 @@
+<template>
+    <header class="nav">
+        <div class="nav-inner">
+            <a href="#top" class="logo">
+                <div class="img"></div>
+                <span><span class="braces">&#123;</span> Chocola <span class="braces">&#125;</span></span>
+            </a>
+            <div class="links">
+                <a href="#logic">Logic</a>
+                <a href="#components">Components</a>
+                <a href="#start">Install</a>
+            </div>
+
+            <div class="nav-cta">
+                <a href="https://github.com/chocolajs/chocola/wiki" class="docs-links" target="_blank" rel="noopener noreferrer" title="Stable documentation for v1.6.0">
+                    <CommonButton label="1.6.0 docs" featured="{true}"></CommonButton>
+                </a>
+                <a href="https://github.com/chocolajs/chocola/tree/main/documentation" class="docs-links" target="_blank" rel="noopener noreferrer" title="Preview documentation for v2 (next)">
+                    <CommonButton label="v2 docs" ghost="{true}"></CommonButton>
+                </a>
+                <a href="https://github.com/chocolajs" target="_blank" rel="noopener noreferrer">
+                    <CommonButton label="GitHub" primary="{true}"></CommonButton>
+                </a>
+            </div>
+        </div>
+    </header>
+</template>
+
+<style>
+    .nav {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(250, 250, 248, 0.86);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-soft);
+    }
+
+    .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 40px;
+        max-width: 1120px;
+        margin: 0 auto;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .img {
+        aspect-ratio: 1;
+        width: 1.75rem;
+        background-image: url("../../static/icons/favicon.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .logo span {
+        font-family: 'Fraunces', serif !important;
+        font-weight: 500;
+        font-size: 20px;
+        text-decoration: none;
+        color: var(--text);
+    }
+
+    @media (max-width: 425px) {
+        .logo span {
+            display: none;
+        }
+    }
+
+    span.braces {
+        font-weight: 700;
+        color: #d87416;
+    }
+
+    .links {
+        display: flex;
+        gap: 30px;
+        font-size: 14.5px;
+        color: var(--text-muted);
+    }
+
+    .links a {
+        text-decoration: none;
+        transition: color .15s;
+    }
+
+    .links a:hover {
+        color: var(--text);
+    }
+
+    .nav-cta {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .nav-cta a {
+        max-width: fit-content;
+        text-decoration: none;
+    }
+
+    .nav-docs-link {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.5px;
+        font-weight: 600;
+        white-space: nowrap;
+        transition: color 0.15s;
+    }
+
+    .nav-docs-link.stable {
+        color: var(--gold);
+        border: 1px solid var(--gold-line);
+        background: var(--gold-soft);
+        padding: 6px 12px;
+        border-radius: 999px;
+    }
+
+    .nav-docs-link.stable:hover {
+        background: var(--gold);
+        color: white;
+        border-color: var(--gold);
+    }
+
+    .nav-docs-link.next {
+        color: var(--text-muted);
+        padding: 6px 8px;
+    }
+
+    .nav-docs-link.next:hover {
+        color: var(--text);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    @media (max-width: 943px) {
+        .links {
+            display: none;
+        }
+    }
+
+    @media (max-width: 760px) {
+        .docs-links {
+            display: none;
+        }
+
+        .version-pill {
+            display: none;
+        }
+
+        .nav-docs-link.stable {
+            display: none;
+        }
+    }
+</style>

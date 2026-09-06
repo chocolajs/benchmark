@@ -1,0 +1,122 @@
+<template>
+    <section class="block surface-section" id="components">
+        <div class="wrap">
+            <div class="section-head">
+                <div class="eyebrow">Components</div>
+                <h2>A recipe, and the thing it made from it</h2>
+                <p>A component is a combination of HTML, CSS, and JavaScript logic that gets compiled and rendered into
+                    your app automatically.</p>
+            </div>
+
+            <div class="comp-layout">
+                <div class="code-panel">
+                    <div class="demo-head">
+                        <div class="demo-dots"><span></span><span></span><span></span></div>
+                        <div class="demo-filename">Greeting.html</div>
+                    </div>
+                    <pre>
+                    <span class="tag">&lt;script&gt;</span>
+                    <br>
+                    &emsp;<span class="kw">import</span> CoolButton <span class="kw">from</span> <span class="str">'./CoolButton.html'</span>;
+                    <br>
+                    <br>
+                    &emsp;<span class="kw">let</span> self;
+                    <br>
+                    &emsp;<span class="kw">let</span> input;
+                    <br>
+                    <br>
+                    &emsp;<span class="kw">export let</span> title = <span class="str">"Hello"</span>;
+                    <br>
+                    <br>
+                    &emsp;<span class="kw">function</span> <span class="fn">$runtime</span>() &#123;
+                    <br>
+                    &emsp;&emsp;input.focus();
+                    <br>
+                    &emsp;&#125;
+                    <br>
+                    <span class="tag">&lt;/script&gt;</span>
+                    <br>
+                    <br>
+                    <span class="tag">&lt;template&gt;</span>
+                    <br>
+                    &emsp;<span class="tag">&lt;div&gt;</span>
+                    <br>
+                    &emsp;&emsp;<span class="tag">&lt;h1&gt;</span>&#123;title&#125;<span class="tag">&lt;/h1&gt;</span>
+                    <br>
+                    &emsp;&emsp;<span class="tag">&lt;input</span> <span class="attr">bind:self</span>=<span class="str">"input"</span> <span class="attr">type</span>=<span class="str">"text"</span> <span class="attr">placeholder</span>=<span class="str">"Your name"</span><span class="tag">&gt;</span>
+                    <br>
+                    &emsp;&emsp;<span class="tag">&lt;CoolButton</span> <span class="attr">label</span>=<span class="str">"Not lame button"</span><span class="tag">&gt;&lt;/CoolButton&gt;</span>
+                    <br>
+                    &emsp;<span class="tag">&lt;/div&gt;</span>
+                    <br>
+                    <span class="tag">&lt;/template&gt;</span>
+                    <br>
+                    <br>
+                    <span class="tag">&lt;style&gt;</span>
+                    <br>
+                    &emsp;h1 &#123; <span class="attr">color</span>: chocolate; &#125;
+                    <br>
+                    <span class="tag">&lt;/style&gt;</span>
+                </pre>
+                </div>
+
+                <div class="anno-list">
+                    <div class="anno-item">
+                        <div class="anno-key mono">&lt;template&gt;</div>
+                        <p>The enhanced HTML this component renders — logic blocks and bindings included
+                        </p>
+                    </div>
+                    <div class="anno-item">
+                        <div class="anno-key mono">&lt;script&gt;</div>
+                        <p>Props declaration and component logic</p>
+                    </div>
+                    <div class="anno-item">
+                        <div class="anno-key mono">&lt;style&gt;</div>
+                        <p>CSS placed inside <code>&lt;style&gt;</code> is automatically scoped to the component — it won't leak out and affect other components.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</template>
+
+<style>
+    .comp-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: start;
+    }
+
+    @media (max-width: 900px) {
+        .comp-layout {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .anno-list {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .anno-item {
+        display: flex;
+        gap: 18px;
+    }
+
+    .anno-key {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--gold);
+        flex-shrink: 0;
+        width: 74px;
+    }
+
+    .anno-item p {
+        margin: 0;
+        font-size: 14.5px;
+        color: var(--text-muted);
+    }
+</style>

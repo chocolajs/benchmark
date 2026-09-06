@@ -1,0 +1,12 @@
+{
+  "bundle": {
+    "srcDir": "/src",
+    "outDir": "/dist",
+    "libDir": "/lib",
+    "emptyOutDir": true
+  },
+  "dev": {
+    "hostname": "localhost",
+    "port": 3000
+  }
+}
