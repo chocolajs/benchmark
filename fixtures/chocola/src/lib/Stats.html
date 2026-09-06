@@ -1,0 +1,88 @@
+<template>
+    <div class="stats">
+        <div class="wrap stats-grid">
+            <div class="stat">
+                <div class="num">1</div>
+                <div class="label">dependency</div>
+                <div class="desc">linkedom, that's it</div>
+            </div>
+            <div class="stat">
+                <div class="num">1</div>
+                <div class="label">config file</div>
+                <div class="desc">all the config you need for Chocola</div>
+            </div>
+            <div class="stat">
+                <div class="num">&lt;1s</div>
+                <div class="label">building times</div>
+                <div class="desc">blazing fast</div>
+            </div>
+            <div class="stat">
+                <div class="num">0</div>
+                <div class="label">bundlers</div>
+                <div class="desc">no Webpack, no Vite; one config</div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<style>
+    .stats {
+        border-top: 1px solid var(--border-soft);
+        border-bottom: 1px solid var(--border-soft);
+        background: var(--surface);
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+    }
+
+    .stat {
+        padding: 44px 36px;
+        border-right: 1px solid var(--border-soft);
+    }
+
+    .stat:last-child {
+        border-right: none;
+    }
+
+    .stat .num {
+        font-family: 'Fraunces', serif;
+        font-size: 34px;
+        font-weight: 600;
+        color: var(--gold);
+        margin-bottom: 10px;
+    }
+
+    .stat .label {
+        font-size: 14px;
+        color: var(--text);
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .stat .desc {
+        font-size: 13px;
+        color: var(--text-faint);
+    }
+
+    @media (max-width: 760px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+            padding-inline: 0;
+        }
+
+        .stat:nth-child(2) {
+            border-right: none;
+        }
+
+        .stats {
+            padding-inline: 5vw;
+        }
+
+        .stat {
+            padding-inline: 5vw;
+        }
+    }
+</style>

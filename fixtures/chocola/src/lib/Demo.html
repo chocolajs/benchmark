@@ -1,0 +1,227 @@
+<script>
+    let self = new HTMLElement;
+    let btn = new HTMLButtonElement;
+    let log = new HTMLElement;
+
+    function $runtime() {
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        var steps = ['resolving bindings …', 'baking component…', 'done'];
+
+        setLabel();
+
+        btn.addEventListener('click', () => { actDemo(reduced, steps) });
+    }
+
+    function setLabel() {
+        btn.setAttribute('data-label', self.classList.contains('is-compiled') ? 'reset' : 'compile');
+    }
+
+    function actDemo(reduced, steps) {
+        if (self.classList.contains('is-compiled')) {
+            self.classList.remove('is-compiled');
+            log.textContent = '';
+            setLabel();
+            return;
+        }
+
+        if (reduced) {
+            self.classList.add('is-compiled');
+            log.textContent = steps[steps.length - 1];
+            setLabel();
+            return;
+        }
+
+        var i = 0;
+        log.textContent = steps[0];
+        var interval = setInterval(function () {
+            i++;
+            if (i < steps.length) {
+                log.textContent = steps[i];
+            }
+            if (i >= steps.length - 1) {
+                self.classList.add('is-compiled');
+                setLabel();
+                clearInterval(interval);
+            }
+        }, 500);
+    }
+</script>
+
+<template>
+    <div class="demo" id="compileDemo">
+        <div class="demo-head">
+            <div class="demo-filename">status-badge.html</div>
+
+            <div class="demo-dots"><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="demo-body">
+            <div class="demo-source">
+                <div class="code-block">
+                    <span class="tag">&lt;h1&gt;</span><span class="baked">&#123;title&#125;</span><span
+                        class="tag">&lt;/h1&gt;</span>
+                    <br>
+                    <br>
+                    <span class="tag">&lt;p&gt;</span>Status: <span class="baked">&#123;status&#125;</span><span
+                        class="tag">&lt;/p&gt;</span>
+                    <br>
+                    <br>
+                    <span class="tag">&lt;div</span><span class="attr"> if</span>=<span class="live">"&#123;status ===
+                        'live'&#125;"</span><span class="tag">&gt;</span>
+                    <br>
+                    <span class="tag">&emsp;&emsp;&lt;span&gt;</span>● Online<span class="tag">&lt;/span&gt;</span>
+                    <br>
+                    <span class="tag">&lt;/div&gt;</span>
+                </div>
+            </div>
+
+            <div class="demo-output">
+                <div class="code-block">
+                    <span class="tag">&lt;h1&gt;</span><span class="baked">Chocola</span><span
+                        class="tag">&lt;/h1&gt;</span>
+                    <br>
+                    <br>
+                    <span class="tag">&lt;p&gt;</span>
+                    <br>
+                    &emsp;Status: <span class="tag">&lt;span</span><span class="tag">&gt;</span><span
+                        class="baked">live</span><span class="tag">&lt;/span&gt;
+                        <br>
+                        &lt;/p&gt;</span>
+                    <br>
+                    <br>
+                    <span class="tag">&lt;div</span><span class="tag">&gt;</span>
+                    <br>
+                    <span class="tag">&emsp;&emsp;&lt;span&gt;</span>● Online<span class="tag">&lt;/span&gt;</span>
+                    <br>
+                    <span class="tag">&lt;/div&gt;</span>
+                    <br>
+                </div>
+            </div>
+
+            <div bind:self="log" class="buildlog"></div>
+        </div>
+
+        <div class="demo-footer">
+
+            <button bind:self="btn" class="compile-btn" data-label=""></button>
+        </div>
+    </div>
+</template>
+
+<style>
+    .demo {
+        --surface: var(--dp-surface);
+        --surface-2: var(--dp-surface-2);
+        --border: var(--dp-border);
+        --border-soft: var(--dp-border-soft);
+        --text: var(--dp-text);
+        --text-muted: var(--dp-text-muted);
+        --text-faint: var(--dp-text-faint);
+        --gold: var(--dp-gold);
+        --pink: var(--dp-pink);
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+
+    :root.is-compiled .demo-source {
+        display: none;
+    }
+
+    :root.is-compiled .demo-output {
+        display: block;
+        animation: reveal .5s ease;
+    }
+
+    @keyframes reveal {
+        from {
+            opacity: 0;
+            transform: translateY(6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    .demo-footer {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        gap: 12px;
+        padding: 16px 22px;
+        border-top: 1px solid var(--border-soft);
+        background: var(--surface-2);
+    }
+
+    .demo-legend {
+        display: flex;
+        gap: 16px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12px;
+        color: var(--text-faint);
+    }
+
+    .demo-legend span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .dot.gold {
+        background: var(--gold);
+    }
+
+    .dot.pink {
+        background: var(--pink);
+    }
+
+    .compile-btn {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 13px;
+        font-weight: 600;
+        background: var(--text);
+        color: var(--surface);
+        border: none;
+        border-radius: 999px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: transform .15s ease;
+        white-space: nowrap;
+    }
+
+    .compile-btn:hover {
+        transform: translateY(-1px);
+    }
+
+    .demo.is-compiled .compile-btn::after {
+        content: " ↺ reset";
+    }
+
+    .demo:not(.is-compiled) .compile-btn::after {
+        content: " → compile";
+    }
+
+    .compile-btn::before {
+        content: attr(data-label);
+    }
+
+    .buildlog {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 11.5px;
+        color: var(--text-faint);
+        height: 16px;
+        margin-top: 6px;
+    }
+</style>

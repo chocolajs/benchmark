@@ -1,0 +1,257 @@
+<script>
+    let self = new HTMLElement;
+    let btn = new HTMLButtonElement;
+    let installBox = new HTMLDivElement;
+    let promptBefore = new HTMLDivElement;
+    let ogPrompt = new HTMLSpanElement;
+    let successMessage = new HTMLSpanElement;
+
+    let installPrompt = "npm i chocola@next";
+
+    async function $runtime() {
+        btn.addEventListener("click", async () => { await copyPrompt() });
+    }
+
+    async function copyPrompt() {
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+        if (btn.disabled) return;
+
+        successMessage.style.width = ogPrompt.getBoundingClientRect().width + "px";
+        installBox.style.height = installBox.getBoundingClientRect().height + "px";
+
+        navigator.clipboard.writeText(installPrompt);
+        promptBefore.style.display = "block";
+        btn.disabled = true;
+
+        try {
+            await delay(50);
+            promptBefore.style.width = "100%";
+
+            await delay(250);
+            ogPrompt.style.opacity = "0";
+
+            await delay(500);
+            ogPrompt.style.display = "none";
+            successMessage.style.display = "block";
+            promptBefore.style.opacity = "0";
+
+            await delay(50);
+            successMessage.style.opacity = "1";
+
+            await delay(1500);
+            successMessage.style.opacity = "0";
+
+            await delay(500);
+            successMessage.style.display = "none";
+            ogPrompt.style.display = "block";
+            promptBefore.style.display = "none";
+            promptBefore.style.width = "0%";
+            promptBefore.style.opacity = "1";
+
+            successMessage.style.width = "auto";
+            installBox.style.height = "auto";
+            btn.disabled = false;
+
+            await delay(50);
+            ogPrompt.style.opacity = "1";
+        } catch (error) {
+            console.error("Error en la animación de copiado:", error);
+            btn.disabled = false;
+        }
+    }
+</script>
+
+<template>
+    <section class="cta-block" id="start">
+        <div class="wrap">
+            <img src="../../static/icons/favicon.svg" alt="Chocola Logo">
+
+            <div class="eyebrow" style="justify-content:center;">Get started</div>
+
+            <h2>Install once. Compile forever.</h2>
+
+            <p>No boilerplate. No plugins to reconcile. Point Chocola at a folder.</p>
+
+            <div bind:self="installBox" class="install-box">
+                <div bind:self="promptBefore" class="before"></div>
+
+                <span bind:self="ogPrompt" class="og-prompt"><span class="pink">$</span> <span class="cmd">{installPrompt}</span></span>
+
+                <span bind:self="successMessage" class="sccs-msg"><span class="brace-gold">&#123;</span> Prompt copied!
+                    <span class="brace-gold">&#125;</span></span>
+
+                <button bind:self="btn" class="copy-btn">Copy</button>
+            </div>
+
+            <div class="cta-switch">
+                <span>Looking for stable? Use</span>
+                <code>npm i chocola</code>
+            </div>
+        </div>
+    </section>
+</template>
+
+<style>
+    :root * {
+        z-index: 1;
+    }
+
+    .cta-block {
+        text-align: center;
+        padding: 130px 0 140px;
+    }
+
+    .wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    span {
+        align-self: center;
+    }
+
+    h2 {
+        font-size: clamp(30px, 4vw, 46px);
+    }
+
+    p {
+        color: var(--text-muted);
+        font-size: 16.5px;
+        margin-bottom: 44px;
+    }
+
+    img {
+        margin-bottom: 32px;
+        max-width: 20%;
+    }
+
+    .install-box {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        background-color: var(--surface-3);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 12px 12px 12px 24px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 14.5px;
+        transition: background-color 0.3s ease-in-out;
+        overflow: hidden;
+    }
+
+    .install-box:hover {
+        background-color: var(--surface-2);
+    }
+
+    .before {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background-color: white;
+        border-radius: 999px;
+        mix-blend-mode: soft-light;
+        transition: width 1s ease-in-out, opacity 1s ease-in-out;
+        z-index: 0;
+    }
+
+    .og-prompt,
+    .sccs-msg {
+        transition: all 0.5s ease-out;
+    }
+
+    .sccs-msg {
+        opacity: 0;
+        display: none;
+        font-weight: 700;
+    }
+
+    .brace-gold {
+        font-weight: 800;
+        color: var(--gold);
+    }
+
+    .pink {
+        opacity: 0.65;
+        color: var(--pink);
+    }
+
+    @keyframes copy {
+        from {
+            width: 0%;
+        }
+
+        to {
+            width: 100%;
+        }
+    }
+
+    .install-box .prompt {
+        color: var(--text-faint);
+        z-index: 1;
+    }
+
+    .install-box .cmd {
+        color: var(--text);
+    }
+
+    .copy-btn {
+        background: var(--text);
+        color: var(--bg);
+        border: none;
+        border-radius: 999px;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 12.5px;
+        padding: 8px 16px;
+        cursor: pointer;
+    }
+
+    .cta-switch {
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 12.5px;
+        color: var(--text-faint);
+    }
+
+    .cta-switch a {
+        color: var(--gold);
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .cta-switch a:hover {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .cta-switch code {
+        font-size: 12px;
+        padding: 2px 6px;
+    }
+
+    .cta-switch-sep {
+        color: var(--border);
+        font-weight: 700;
+    }
+
+    .cta-note {
+        margin-top: 14px;
+        font-size: 13px;
+        color: var(--text-faint);
+    }
+
+    .cta-note code {
+        font-size: 12.5px;
+    }
+</style>

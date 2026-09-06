@@ -1,0 +1,29 @@
+{
+  "name": "chocolajs.dev",
+  "version": "1.0.0",
+  "description": "The Chocola project website",
+  "keywords": [
+    "chocola",
+    "chocolajs"
+  ],
+  "homepage": "https://github.com/chocolajs/chocolajs.dev#readme",
+  "bugs": {
+    "url": "https://github.com/chocolajs/chocolajs.dev/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chocolajs/chocolajs.dev.git"
+  },
+  "license": "MIT",
+  "author": "sadgabi20",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node chocola.server.js",
+    "build": "node chocola.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "chocola": "^2.0.0-next.9"
+  }
+}
