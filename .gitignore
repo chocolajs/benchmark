@@ -1,4 +1,5 @@
 *.chocola
+build
 
 # Logs
 logs
