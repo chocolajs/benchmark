@@ -46,8 +46,12 @@ All sizes are wall bytes + human `KB/MB`. Times are wall `ms/s` via `performance
 ## Outputs
 
 - **Console table** — summary winner per metric (`npm run bench`)
-- **`results.json`** — machine-readable payload `{ meta, results }` (auto-written)
-- **`REPORT.md`** — markdown report with summary table + per-fixture details (auto-written)
+- **`record/MMDDYYYY/REPORT-HHMMSS.md`** — timestamped markdown report (auto-saved)
+- **`record/MMDDYYYY/results-HHMMSS.json`** — timestamped machine-readable payload
+
+All outputs use **relative paths** (`fixtures/chocola`, `static/img/...`) — no absolute paths leak (privacy).
+
+Automated recording runs on every `node bench.mjs` invocation (including `--json`/`--markdown`/`--out` modes) via `saveRecord()` — no manual `mkdir`/`mv` needed. Each run creates a new `HHMMSS` file, never overwrites. No files are written at the repo top level.
 
 Example `results.json`:
 
@@ -79,6 +83,6 @@ See `fixtures/sveltekit/README.md` for porting notes.
 
 ## Notes
 
-- Windows + Powershell friendly (uses `spawn` with `shell: true`, `taskkill` for cleanup)
+- Windows + Powershell friendly (uses `cmd.exe /c` for `.cmd` shims, `taskkill` for cleanup)
 - Dev servers are killed after measurement; ports 3000 (Chocola) and 5174 (SvelteKit) must be free
-- `.gitignore` at repo root ignores `build/`, `dist/`, `node_modules/`, `.svelte-kit/` — benchmark outputs go to `results.json` / `REPORT.md` (not ignored)
+- `.gitignore` ignores `build/`, `dist/`, `node_modules/`, `.svelte-kit/` — benchmark records go to `record/` (not ignored)

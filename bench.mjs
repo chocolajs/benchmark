@@ -691,6 +691,35 @@ function buildReport(results, meta) {
   return lines.join('\n');
 }
 
+function getRecordTimestamp(date = new Date()) {
+  const pad = (n) => String(n).padStart(2, '0');
+  const mm = pad(date.getMonth() + 1);
+  const dd = pad(date.getDate());
+  const yyyy = date.getFullYear();
+  const hh = pad(date.getHours());
+  const mi = pad(date.getMinutes());
+  const ss = pad(date.getSeconds());
+  return {
+    dateDir: `${mm}${dd}${yyyy}`,
+    timeFile: `${hh}${mi}${ss}`,
+    iso: date.toISOString(),
+  };
+}
+
+async function saveRecord(payload, md) {
+  const { dateDir, timeFile } = getRecordTimestamp(new Date(payload.meta.date));
+  const recordDir = path.join(__dirname, 'record', dateDir);
+  await fs.promises.mkdir(recordDir, { recursive: true });
+  const reportPath = path.join(recordDir, `REPORT-${timeFile}.md`);
+  const resultsJsonPath = path.join(recordDir, `results-${timeFile}.json`);
+  // Save markdown report
+  await fs.promises.writeFile(reportPath, md, 'utf8');
+  // Save results as JSON
+  const jsonStr = JSON.stringify(payload, null, 2);
+  await fs.promises.writeFile(resultsJsonPath, jsonStr, 'utf8');
+  return { recordDir, reportPath, resultsJsonPath, dateDir, timeFile };
+}
+
 function printConsoleTable(results) {
   const c = results.find((r) => r.key === 'chocola');
   const s = results.find((r) => r.key === 'sveltekit');
@@ -775,8 +804,18 @@ async function main() {
   };
 
   const payload = { meta, results };
+  const mdForRecord = buildReport(results, meta);
 
-  // Output handling
+  // Automated recording: always save to record/MMDDYYYY/REPORT-HHMMSS.md and results-HHMMSS.json
+  // Prevents human error from manual filing
+  try {
+    const rec = await saveRecord(payload, mdForRecord);
+    console.log(`Record saved to ${toRelative(rec.recordDir)}/REPORT-${rec.timeFile}.md and results-${rec.timeFile}.json`);
+  } catch (e) {
+    console.warn(`Warning: failed to save record: ${e.message}`);
+  }
+
+  // Output handling — no top-level writes, only record/ + stdout/--out
   if (opts.json || opts.markdown) {
     if (opts.json) {
       const json = JSON.stringify(payload, null, 2);
@@ -788,31 +827,20 @@ async function main() {
       }
     }
     if (opts.markdown) {
-      const md = buildReport(results, meta);
+      const md = mdForRecord;
       if (opts.out && !opts.json) {
         await fs.promises.writeFile(path.resolve(opts.out), md, 'utf8');
         console.log(`Markdown written to ${opts.out}`);
       } else if (opts.markdown && !opts.json) {
         console.log(md);
       } else if (opts.json && opts.markdown) {
-        // both: write markdown to REPORT.md
-        const mdPath = path.join(__dirname, 'REPORT.md');
-        await fs.promises.writeFile(mdPath, md, 'utf8');
-        console.log(`Markdown also written to ${mdPath}`);
+        // both: just output markdown to stdout as well (record already saved)
+        console.log(md);
       }
     }
   } else {
-    // default: console table + write files
+    // default: console table (record already saved, no top-level files)
     printConsoleTable(results);
-
-    const jsonPath = path.join(__dirname, 'results.json');
-    await fs.promises.writeFile(jsonPath, JSON.stringify(payload, null, 2), 'utf8');
-    console.log(`Results written to ${path.relative(process.cwd(), jsonPath)}`);
-
-    const md = buildReport(results, meta);
-    const mdPath = path.join(__dirname, 'REPORT.md');
-    await fs.promises.writeFile(mdPath, md, 'utf8');
-    console.log(`Report written to ${path.relative(process.cwd(), mdPath)}`);
 
     if (opts.out) {
       await fs.promises.writeFile(path.resolve(opts.out), JSON.stringify(payload, null, 2), 'utf8');
